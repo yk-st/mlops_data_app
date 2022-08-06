@@ -1,0 +1,1 @@
+db.createUser({user: "action", pwd: "pass123", roles: [{role:"readWrite",db: "user_prediction"}]})

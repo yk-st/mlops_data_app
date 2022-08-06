@@ -1,0 +1,14 @@
+# queryを使ってもOKです。
+in:
+  type: postgresql
+  host: metabase_postgres_big
+  user: postgres
+  password: "password"
+  database: metabase
+  select: name,email,id,source
+  table: people
+out:
+  type: parquet
+  path_prefix: /tmp/share_file/datalake/people/people
+  compression_codec: GZIP
+  overwrite: true
