@@ -1,3 +1,11 @@
+from pyspark.ml.clustering import KMeans
+from pyspark.ml.evaluation import ClusteringEvaluator
+from pyspark.sql import SparkSession
+from pyspark.ml.evaluation import ClusteringEvaluator
+from pyspark.sql import SparkSession
+import pyspark.sql.functions as F
+
+
 df2 = spark.read.csv("/Users/saitouyuuki/Desktop/src/mlops_data_app/files/datafile/user_activity.csv",header=True)
 df2 = df2.select(F.col('id').cast("integer"),F.col('money').cast("integer"))
 predict,train=df2.randomSplit([0.6,0.4],785)
@@ -22,8 +30,8 @@ from pyspark.sql import Row
 spark = SparkSession \
     .builder \
     .appName("mongodbtest1") \
-    .config("spark.mongodb.input.uri", "mongodb://root:password@mongo_data_big:27017/user_predictions") \
-    .config("spark.mongodb.output.uri", "mongodb://root:password@mongo_data_big:27017/user_predictions") \
+    .config("spark.mongodb.input.uri", "mongodb://action:pass123@mongo_data_big:27017/user_prediction") \
+    .config("spark.mongodb.output.uri", "mongodb://action:pass123@mongo_data_big:27017/user_prediction") \
     .config('spark.jars.packages', 'org.mongodb.spark:mongo-spark-connector_2.12:3.0.2') \
     .getOrCreate()
 
