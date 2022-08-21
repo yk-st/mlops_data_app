@@ -42,6 +42,9 @@ pyspark --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.2 \
 df = spark.sql("select 1 as id, 0 as predictions union all select 2 as id, 1 as predictions")
 df.repartition(1).write.mode("overwrite").option("compression","gzip").csv("/home/pyspark/hoge")
 
+# parquetの場合
+df = spark.read.parquet("")
+
 df.repartition(1).write \
     .format('com.mongodb.spark.sql.DefaultSource') \
     .option( "uri", "mongodb://action:pass123@mongo_data_mlops:27017/user_prediction.prediction") \

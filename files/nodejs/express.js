@@ -44,9 +44,13 @@ app.get('/display_user_base_data', (req, res) => {
 
     mongos(req).then(result => {
         if (result == 1) {
+            // A広告経由である
+            senddata('ad_throuth_A',req)
             res.send('ユーザ属性が1の人です。A広告');  
         }
         else {
+            // B広告経由である
+            senddata('ad_throuth_B',req)
             res.send('ユーザ属性が1以外の人です。B広告');
         }
     });
