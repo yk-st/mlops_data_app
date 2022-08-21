@@ -10,6 +10,7 @@ const kafka = new Kafka({
 const express = require('express');
 const app = express();
 
+// mongoDBへ接続して結果を取得する処理
 const promiseFunc = req => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
