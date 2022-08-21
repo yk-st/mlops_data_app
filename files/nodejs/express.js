@@ -5,7 +5,7 @@ const MongoClient = mongodb.MongoClient
 
 const kafka = new Kafka({
     clientId: 'my-app',
-    brokers: ['kafka_big:9092']
+    brokers: ['kafka_mlops:9092']
 })
 const express = require('express');
 const app = express();
@@ -14,15 +14,11 @@ const promiseFunc = req => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             // mongoDB直接ではなくてAPIサーバと接続することも多いです
-            MongoClient.connect('mongodb://action:pass123@mongo_data_big:27017/user_prediction', (err, db) => {
+            MongoClient.connect('mongodb://action:pass123@mongo_data_mlops:27017/user_prediction', (err, db) => {
                 if (err) throw err;
 
                 const dbName = db.db("user_prediction");
 
-                // dbName.collection("prediction").find().toArray(function(err, res) {
-                //   if (err) throw err;
-                //   console.log(res);
-                // });
                 // 予測値をmongoDBより取得
                 dbName.collection("prediction").find({id:parseInt(req.query.id)},{predictions:1, _id:0}).toArray((error, documents)=>{
                     console.log(documents);
@@ -46,7 +42,6 @@ async function mongos(req) {
 app.get('/display_user_base_data', (req, res) => {
 
     mongos(req).then(result => {
-        console.log('hogepeke' + result);
         if (result == 1) {
             res.send('ユーザ属性が1の人です。A広告');  
         }
@@ -88,7 +83,7 @@ function senddata(action,req) {
             topic: 'pyspark-topic',
             messages: [
                 {
-                    key: `${date_str}`, "value": `{"id": "${req.params.id}", "money": "${Math.floor(Math.random() * (100 - 2000000))}", "sendtime": ${Date.now()}}`
+                    key: `${date_str}`, "value": `{"id": "${req.query.id}", "money": "${Math.floor(Math.random() * (100 - 2000000))}", "sendtime": ${Date.now()}}`
                 },
             ],
         })

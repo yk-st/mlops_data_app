@@ -12,94 +12,36 @@ services:
     environment:
       MYSQL_DATABASE: metastore
       MYSQL_ROOT_PASSWORD: root
-    container_name: db_mysql_big
+    container_name: db_mysql_mlops
     networks:
       - app-net-big
   # ストリーミング
   kafka:
     build: ./files/kafka
     command: sh /etc/rc.local/start_up.sh
-    container_name: kafka_big
+    container_name: kafka_mlops
     networks:
       - app-net-big
   # ワーキングコンテナ
   workspace:
     build: ./files
     command: sleep infinity
-    volumes:
-      - ./files/digdag:/root
-      - ./data/digdag_tmp:/tmp
-      # - ./lectures/digdag/etl_files:/root/digdag_etl/
     depends_on:
       - mysql
-      - digdagdb
     ports:
       - "0.0.0.0:65432:65432"
-    entrypoint: >
-      sh -c "chmod 755 -R /root/digdag_etl/ && chmod 755 /root/startup.sh && /root/startup.sh && /bin/bash"
-    container_name: pyspark_big
+    container_name: pyspark_mlops
     networks:
       - app-net-big
   # ストリーミング
   nodejs:
     build: ./files/nodejs
     command: node /usr/src/app/express.js
-    container_name: nodejs_big
+    container_name: nodejs_mlops
     ports:
       - 3001:3001
     networks:
       - app-net-big
-  # # BIツール
-  # metabase:
-  #   image: metabase/metabase:v0.42.3
-  #   env_file: ./files/postgres/envbi
-  #   volumes:
-  #     - ./data/metabase-data:/metabase-data
-  #   ports:
-  #     - 3000:3000
-  #   depends_on:
-  #     - postgres-mb
-  #   networks:
-  #     - app-net-big
-  #   container_name: metabase_bi_big
-  # # BIツールバックDB兼データソース
-  # postgres-mb:
-  #   build: ./files/postgres
-  #   volumes:
-  #     - ./data/postgres-data:/var/lib/postgresql/data
-  #     - ./files/posgreinit:/docker-entrypoint-initdb.d
-  #   env_file: ./files/postgres/envbi
-  #   ports:
-  #     - 5432:5432
-  #   networks:
-  #     - app-net-big
-  #   container_name: metabase_postgres_big
-  # digdagデータ保存DBサーバー
-  digdagdb:
-    container_name: postgres_etl_big
-    build: ./files/postgres
-    volumes:
-      - ./data/postgres-data3:/var/lib/postgresql/data
-      #- ./digdag/initsql:/docker-entrypoint-initdb.d
-    env_file: ./files/postgres/envdigdag
-    ports:
-      - 5434:5434
-    command: -p 5434
-    tty: true
-    networks:
-      - app-net-big
-  # # 整形データ格納用データベース
-  # postgres-data:
-  #   build: ./files/postgres
-  #   volumes:
-  #     - ./data/postgres-data2:/var/lib/postgresql/data
-  #   env_file: ./files/postgres/env2
-  #   ports:
-  #     - 5433:5433
-  #   command: -p 5433
-  #   networks:
-  #     - app-net-big
-  #   container_name: postgres_data_big
   mongo:
     build: ./files/mongo
     restart: always
@@ -111,21 +53,7 @@ services:
       - 27017:27017
     networks:
       - app-net-big
-    container_name: mongo_data_big
-  # mongo-express:
-    # image: mongo-express:0.54.0
-    # restart: always
-    # ports:
-    #   - 8081:8081
-    # environment:
-    #   ME_CONFIG_MONGODB_ADMINUSERNAME: root
-    #   ME_CONFIG_MONGODB_ADMINPASSWORD: password
-    #   ME_CONFIG_MONGODB_URL: mongodb://root:password@mongo_data_big:27017/
-    # depends_on:
-    #   - mongo
-    # networks:
-    #   - app-net-big
-    # container_name: mongo_express_data_big
+    container_name: mongo_data_mlops
 
 networks:
   app-net-big:

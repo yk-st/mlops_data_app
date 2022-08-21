@@ -30,21 +30,21 @@ from pyspark.sql import Row
 spark = SparkSession \
     .builder \
     .appName("mongodbtest1") \
-    .config("spark.mongodb.input.uri", "mongodb://action:pass123@mongo_data_big:27017/user_prediction") \
-    .config("spark.mongodb.output.uri", "mongodb://action:pass123@mongo_data_big:27017/user_prediction") \
+    .config("spark.mongodb.input.uri", "mongodb://action:pass123@mongo_data_mlops:27017/user_prediction") \
+    .config("spark.mongodb.output.uri", "mongodb://action:pass123@mongo_data_mlops:27017/user_prediction") \
     .config('spark.jars.packages', 'org.mongodb.spark:mongo-spark-connector_2.12:3.0.2') \
     .getOrCreate()
 
 pyspark --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.2 \
-        --conf spark.mongodb.input.uri=mongodb://action:pass123@mongo_data_big:27017/user_prediction \
-        --conf spark.mongodb.output.uri=mongodb://action:pass123@mongo_data_big:27017/user_prediction
+        --conf spark.mongodb.input.uri=mongodb://action:pass123@mongo_data_mlops:27017/user_prediction \
+        --conf spark.mongodb.output.uri=mongodb://action:pass123@mongo_data_mlops:27017/user_prediction
 
 df = spark.sql("select 1 as id, 0 as predictions union all select 2 as id, 1 as predictions")
 df.repartition(1).write.mode("overwrite").option("compression","gzip").csv("/home/pyspark/hoge")
 
 df.repartition(1).write \
     .format('com.mongodb.spark.sql.DefaultSource') \
-    .option( "uri", "mongodb://action:pass123@mongo_data_big:27017/user_prediction.prediction") \
+    .option( "uri", "mongodb://action:pass123@mongo_data_mlops:27017/user_prediction.prediction") \
     .save()
 
 # mongoへの接続

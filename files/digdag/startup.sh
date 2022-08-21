@@ -19,6 +19,4 @@ embulk gem install embulk-output-postgresql
 embulk gem install embulk-output-parquet
 embulk gem install embulk-output-mongodb_nest -v 0.1.3
 
-chmod 755 -R /root/digdag_etl/
-
 digdag server --config /root/etc/digdag.properties --bind 0.0.0.0 --port 65432 --task-log /var/log/digdag/ --access-log /var/log/digdag
