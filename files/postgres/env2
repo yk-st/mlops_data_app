@@ -1,3 +1,0 @@
-# for postgres
-POSTGRES_DB=accesslayer
-POSTGRES_PASSWORD=password
