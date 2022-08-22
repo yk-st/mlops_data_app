@@ -88,7 +88,7 @@ function senddata(action,req) {
             topic: 'pyspark-topic',
             messages: [
                 {
-                    key: `${date_str}`, "value": `{"id": "${req.query.id}", "money": "${Math.floor(Math.random() * (100 - 2000000))}", "sendtime": ${Date.now()}}`
+                    key: `${date_str}`, "value": `{"id": "${req.query.id}", "action":"${action}", "money": "${Math.floor(Math.random() * (100 - 2000000))}", "sendtime": ${Date.now()}}`
                 },
             ],
         })
