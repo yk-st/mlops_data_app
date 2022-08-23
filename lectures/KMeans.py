@@ -31,3 +31,4 @@ into_kvs = predictions.select('id','prediction')
 
 # 結果をparquetとして保存する
 into_kvs.repartition(1).write.mode("overwrite").option("compression","gzip").parquet("/tmp/share_file/datamodel/part1")
+#into_kvs.repartition(1).write.mode("overwrite").option("compression","gzip").parquet("/tmp/share_file/datamodel/part1")

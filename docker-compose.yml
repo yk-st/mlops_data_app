@@ -28,8 +28,6 @@ services:
     command: sleep infinity
     depends_on:
       - mysql
-    ports:
-      - "0.0.0.0:65432:65432"
     container_name: pyspark_mlops
     networks:
       - app-net-big
