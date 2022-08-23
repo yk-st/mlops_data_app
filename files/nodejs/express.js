@@ -21,11 +21,11 @@ const promiseFunc = req => {
                 const dbName = db.db("user_prediction");
 
                 // 予測値をmongoDBより取得
-                dbName.collection("prediction").find({id:parseInt(req.query.id)},{predictions:1, _id:0}).toArray((error, documents)=>{
+                dbName.collection("prediction").find({id:parseInt(req.query.id)},{prediction:1, _id:0}).toArray((error, documents)=>{
                     console.log(documents);
                     let attr = 0;
                     for (var document of documents) {
-                        attr = parseInt(document.predictions);
+                        attr = parseInt(document.prediction);
                         console.log('attribute:' + attr);
                     }
                     resolve(attr);
@@ -88,7 +88,7 @@ function senddata(action,req) {
             topic: 'pyspark-topic',
             messages: [
                 {
-                    key: `${date_str}`, "value": `{"id": "${req.query.id}", "action":"${action}", "money": "${Math.floor(Math.random() * (100 - 2000000))}", "sendtime": ${Date.now()}}`
+                    key: `${date_str}`, "value": `{"id": "${req.query.id}", "action":"${action}", "money": "${Math.floor(Math.random() * (10000000))}", "sendtime": ${Date.now()}}`
                 },
             ],
         })

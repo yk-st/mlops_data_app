@@ -4,7 +4,7 @@ from pyspark.sql import SparkSession
 from pyspark.ml.evaluation import ClusteringEvaluator
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as F
-
+from pyspark.ml.feature import VectorAssembler
 
 # 学習用データの読み込み
 df2 = spark.read.parquet("/tmp/share_file/datamart/web_actions/")
@@ -30,5 +30,5 @@ predictions = model.transform(predict_vector)
 into_kvs = predictions.select('id','prediction')
 
 # 結果をparquetとして保存する
-into_kvs.repartition(1).write.mode("overwrite").option("compression","gzip").parquet("/tmp/share_file/datamodel/part1")
 #into_kvs.repartition(1).write.mode("overwrite").option("compression","gzip").parquet("/tmp/share_file/datamodel/part1")
+into_kvs.repartition(1).write.mode("overwrite").option("compression","gzip").parquet("/tmp/share_file/datamodel/part2")
