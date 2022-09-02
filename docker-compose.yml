@@ -45,7 +45,7 @@ services:
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: passowrd
+      MONGO_INITDB_ROOT_PASSWORD: ZQpassowrd
       MONGO_INITDB_DATABASE: user_prediction
     ports:
       - 27017:27017
