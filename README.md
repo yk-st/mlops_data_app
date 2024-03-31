@@ -19,3 +19,7 @@ https://www.udemy.com/course/python-spark-streaming/?referralCode=F5E3B429A5C474
 
 4. **「超速入門!【データサイエンスへの最初の一歩】PythonとSparkで学ぶデータ分析のための前処理と分散処理 一気見講座」**
 https://www.udemy.com/course/draft/4415660/?referralCode=EF89D5D240FB483AF4A1
+
+変更履歴
+
+1. 2024/03/31 : Sparkのバージョン固定
