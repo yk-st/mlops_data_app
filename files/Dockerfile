@@ -96,7 +96,7 @@ COPY ./kafka/kafka_2.13-3.0.2.tgz /home/pyspark/
 #RUN wget https://dlcdn.apache.org/kafka/3.0.2/kafka_2.13-3.0.2.tgz
 RUN tar -xzvf kafka_2.13-3.0.2.tgz
 
-RUN ln -s kafka_2.12-3.0.2 kafka
+RUN ln -s kafka_2.13-3.0.2 kafka
 
 RUN git clone https://github.com/edenhill/librdkafka.git
 WORKDIR /home/pyspark/librdkafka/
