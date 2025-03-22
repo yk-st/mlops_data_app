@@ -23,7 +23,7 @@ model = kmeans.fit(train_vector)
 
 # モデルの結果からユーザを分類する
 predict =predict.groupby('id').agg(F.sum('money').alias('money'))
-predict_vector = VectorAssembler(inputCols = ['money'], outputCol = "features").transform(train)
+predict_vector = VectorAssembler(inputCols = ['money'], outputCol = "features").transform(predict)
 predictions = model.transform(predict_vector)
 
 # 予測結果を確認する
